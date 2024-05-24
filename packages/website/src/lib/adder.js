@@ -1,4 +1,4 @@
-import { getAdderConfig, getAdderList, groupBy } from "svelte-add/website";
+import { getAdderConfig, getAdderList } from "svelte-add/website";
 
 /**
  * @typedef AdderMetadataWithOptions
@@ -51,4 +51,25 @@ export async function getAdderDetails(name) {
  */
 function groupAddersByCategory(adders) {
     return groupBy(adders, (adder) => adder.metadata.category);
+}
+
+/**
+ * @template Key
+ * @template Value
+ * @param {Value[]} list
+ * @param {(input: Value) => Key} keyGetter
+ * @returns {Map<Key, Value[]>}
+ */
+function groupBy(list, keyGetter) {
+    const map = new Map();
+    list.forEach((item) => {
+        const key = keyGetter(item);
+        const collection = map.get(key);
+        if (!collection) {
+            map.set(key, [item]);
+        } else {
+            collection.push(item);
+        }
+    });
+    return map;
 }
