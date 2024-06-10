@@ -1,5 +1,5 @@
 {
-    "name": "@cokakoala/svelte-add-tailwindcss-test",
+    "name": "@svelte-add/tailwindcss",
     "version": "1.0.10",
     "bin": "build/index.js",
     "type": "module",
