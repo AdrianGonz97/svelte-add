@@ -2,6 +2,8 @@ import { categories, defineAdderConfig, generateAdderInfo } from "@svelte-add/co
 import pkg from "../package.json";
 import { options } from "./options";
 
+console.log("i've changed");
+
 export const adder = defineAdderConfig({
     metadata: {
         ...generateAdderInfo(pkg),
