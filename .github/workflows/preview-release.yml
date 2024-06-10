@@ -3,13 +3,6 @@ on:
     pull_request_review:
         types: [edited, submitted]
 
-env:
-    CI: true
-
-permissions:
-    contents: write
-    pull-requests: write
-
 jobs:
     preview-release:
         timeout-minutes: 30
@@ -40,6 +33,21 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-pnpm-store-
 
+            - name: Run changed-files with dir_names
+              id: changed-files-dir-names
+              uses: tj-actions/changed-files@v44
+              with:
+                  separator: " "
+                  dir_names: "true"
+                  dir_names_max_depth: "2"
+                  files: |
+                      adders/*
+                      packages/*
+                  files_ignore: |
+                      packages/dev-utils/*
+                      packages/tests/*
+                      packages/website/*
+
             - name: install dependencies
               run: pnpm install
 
@@ -47,4 +55,4 @@ jobs:
               run: pnpm build:prod
 
             - name: publish preview
-              run: pnpm publish:preview
+              run: pnpm pkg-pr-new publish ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
