@@ -20,7 +20,7 @@
         "utils:packages": "node ./packages/dev-utils/build/index.js packages",
         "utils:dependencies": "node ./packages/dev-utils/build/index.js dependencies && pnpm prettier:fix",
         "check": "pnpm eslint:check && pnpm prettier:check && pnpm types:check",
-        "publish:preview": "pkg-pr-new publish --pnpm ./adders/*"
+        "publish:preview": "pkg-pr-new publish --pnpm ./adders/* ./packages/*"
     },
     "keywords": [],
     "author": "",
