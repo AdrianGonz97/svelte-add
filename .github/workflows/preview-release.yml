@@ -41,12 +41,12 @@ jobs:
                   dir_names: "true"
                   dir_names_max_depth: "2"
                   files: |
-                      adders/*
-                      packages/*
+                      adders/**
+                      packages/**
                   files_ignore: |
-                      packages/dev-utils/*
-                      packages/tests/*
-                      packages/website/*
+                      packages/dev-utils/**
+                      packages/tests/**
+                      packages/website/**
 
             - name: install dependencies
               run: pnpm install
@@ -55,4 +55,5 @@ jobs:
               run: pnpm build:prod
 
             - name: publish preview
+              if: ${{ steps.changed-files-dir-names.outputs.any_changed }}
               run: pnpm pkg-pr-new publish ${{ steps.changed-files-dir-names.outputs.all_changed_files }}
