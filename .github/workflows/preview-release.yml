@@ -1,0 +1,48 @@
+name: Publish Approved Pull Requests
+on:
+    pull_request_review:
+        types: [submitted]
+
+env:
+    CI: true
+
+permissions:
+    contents: write
+    pull-requests: write
+
+jobs:
+    preview-release:
+        timeout-minutes: 30
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout code repository
+              uses: actions/checkout@v3
+
+            - uses: pnpm/action-setup@v4
+
+            - name: setup node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 20
+
+            # PNPM Store cache setup
+            - name: get pnpm store directory
+              id: pnpm-cache
+              run: |
+                  echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+            - name: setup pnpm cache
+              uses: actions/cache@v4
+              with:
+                  path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ runner.os }}-pnpm-store-
+
+            - name: install dependencies
+              run: pnpm install
+
+            - name: build
+              run: pnpm build:prod
+
+            - name: publish preview
+              run: pnpm publish:preview
