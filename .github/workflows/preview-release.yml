@@ -1,7 +1,7 @@
 name: Publish Approved Pull Requests
 on:
-    pull_request_review:
-        types: [submitted]
+    label:
+        types: [created]
 
 env:
     CI: true
