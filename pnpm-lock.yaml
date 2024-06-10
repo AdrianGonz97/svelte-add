@@ -84,6 +84,12 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
 
+  adders/foo:
+    dependencies:
+      '@svelte-add/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+
   adders/mdsvex:
     dependencies:
       '@svelte-add/core':
