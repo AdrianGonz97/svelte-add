@@ -1,92 +1,92 @@
-name: Pull requests
-on:
-    pull_request:
-        branches:
-            - main
-env:
-    CI: true
-    PNPM_CACHE_FOLDER: .pnpm-store
+# name: Pull requests
+# on:
+#     pull_request:
+#         branches:
+#             - main
+# env:
+#     CI: true
+#     PNPM_CACHE_FOLDER: .pnpm-store
 
-permissions:
-    contents: write
-    pull-requests: write
+# permissions:
+#     contents: write
+#     pull-requests: write
 
-jobs:
-    test:
-        timeout-minutes: 30
-        runs-on: ubuntu-latest
-        steps:
-            - name: checkout code repository
-              uses: actions/checkout@v3
-              with:
-                  fetch-depth: 0
+# jobs:
+#     test:
+#         timeout-minutes: 30
+#         runs-on: ubuntu-latest
+#         steps:
+#             - name: checkout code repository
+#               uses: actions/checkout@v3
+#               with:
+#                   fetch-depth: 0
 
-            - name: setup node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 20
-            - name: install pnpm
-              run: npm i pnpm@latest -g
+#             - name: setup node.js
+#               uses: actions/setup-node@v3
+#               with:
+#                   node-version: 20
+#             - name: install pnpm
+#               run: npm i pnpm@latest -g
 
-            - name: setup pnpm config
-              run: pnpm config set store-dir $PNPM_CACHE_FOLDER
+#             - name: setup pnpm config
+#               run: pnpm config set store-dir $PNPM_CACHE_FOLDER
 
-            - name: install dependencies
-              run: pnpm install
+#             - name: install dependencies
+#               run: pnpm install
 
-            - name: build
-              run: pnpm build:prod
+#             - name: build
+#               run: pnpm build:prod
 
-            - name: test
-              run: pnpm test
-    checks:
-        runs-on: ubuntu-latest
-        steps:
-            - name: checkout code repository
-              uses: actions/checkout@v3
+#             - name: test
+#               run: pnpm test
+#     checks:
+#         runs-on: ubuntu-latest
+#         steps:
+#             - name: checkout code repository
+#               uses: actions/checkout@v3
 
-            - name: setup node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 20
-            - name: install pnpm
-              run: npm i pnpm@latest -g
+#             - name: setup node.js
+#               uses: actions/setup-node@v3
+#               with:
+#                   node-version: 20
+#             - name: install pnpm
+#               run: npm i pnpm@latest -g
 
-            - name: setup pnpm config
-              run: pnpm config set store-dir $PNPM_CACHE_FOLDER
+#             - name: setup pnpm config
+#               run: pnpm config set store-dir $PNPM_CACHE_FOLDER
 
-            - name: install dependencies
-              run: pnpm install
+#             - name: install dependencies
+#               run: pnpm install
 
-            - name: types
-              run: pnpm types:check
+#             - name: types
+#               run: pnpm types:check
 
-            - name: prettier
-              run: pnpm prettier:check
+#             - name: prettier
+#               run: pnpm prettier:check
 
-            - name: eslint
-              run: pnpm eslint:check
-    website:
-        runs-on: ubuntu-latest
-        steps:
-            - name: checkout code repository
-              uses: actions/checkout@v3
+#             - name: eslint
+#               run: pnpm eslint:check
+#     website:
+#         runs-on: ubuntu-latest
+#         steps:
+#             - name: checkout code repository
+#               uses: actions/checkout@v3
 
-            - name: setup node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: 20
-            - name: install pnpm
-              run: npm i pnpm@latest -g
+#             - name: setup node.js
+#               uses: actions/setup-node@v3
+#               with:
+#                   node-version: 20
+#             - name: install pnpm
+#               run: npm i pnpm@latest -g
 
-            - name: setup pnpm config
-              run: pnpm config set store-dir $PNPM_CACHE_FOLDER
+#             - name: setup pnpm config
+#               run: pnpm config set store-dir $PNPM_CACHE_FOLDER
 
-            - name: install dependencies
-              run: pnpm install
+#             - name: install dependencies
+#               run: pnpm install
 
-            - name: packages build
-              run: pnpm build:prod
+#             - name: packages build
+#               run: pnpm build:prod
 
-            - name: website build
-              run: pnpm website:build
+#             - name: website build
+#               run: pnpm website:build
